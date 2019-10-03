@@ -32,9 +32,11 @@ RUN echo "===> Installing software..." && \
     tar -zxvf /tmp/helm-${HELM_VER}-linux-amd64.tar.gz -C /tmp && \
     mv /tmp/linux-amd64/helm /bin/helm && \
     chmod +x /bin/helm && \
+    helm init --client-only && \
+    helm plugin install https://github.com/chartmuseum/helm-push && \
     \
     echo "===> Cleaning..." && \
     rm -rf /var/cache/apk/* && \
-    rm -rf /tmp
+    rm -rf /tmp/*
 WORKDIR /deploy/ansible
 ENTRYPOINT [ "make" ]
